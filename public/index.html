@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reprodutor de Música Sincronizada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Reprodutor de Música Sincronizada</h1>
+            <div class="room-info">
+                <span id="room-id">Sala: Carregando...</span>
+                <button id="create-room-btn">Criar Nova Sala</button>
+                <div class="join-room">
+                    <input type="text" id="room-code-input" placeholder="Código da sala">
+                    <button id="join-room-btn">Entrar</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="player-container">
+                <div class="player-display">
+                    <div id="player-frame">
+                        <!-- O player será inserido aqui -->
+                        <div id="no-music">
+                            <i class="fas fa-music"></i>
+                            <p>Nenhuma música reproduzindo</p>
+                        </div>
+                    </div>
+                    <div id="local-player" style="display: none;">
+                        <audio id="audio-player" controls></audio>
+                    </div>
+                </div>
+
+                <div class="player-controls">
+                    <button id="prev-btn" class="control-btn" disabled>
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    <button id="play-pause-btn" class="control-btn" disabled>
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button id="next-btn" class="control-btn" disabled>
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                    <div class="volume-control">
+                        <i class="fas fa-volume-up"></i>
+                        <input type="range" id="volume-slider" min="0" max="100" value="70">
+                    </div>
+                    <div class="loop-control">
+                        <select id="loop-mode">
+                            <option value="no-loop">Sem Loop</option>
+                            <option value="single-loop">Loop - Música Atual</option>
+                            <option value="playlist-loop">Loop - Playlist</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-music-container">
+                <h2>Adicionar Música</h2>
+                <div class="add-url">
+                    <input type="text" id="music-url" placeholder="Link do YouTube ou SoundCloud">
+                    <button id="add-url-btn">Adicionar</button>
+                </div>
+                <div class="or-divider">
+                    <span>OU</span>
+                </div>
+                <div class="add-file">
+                    <label for="music-file" class="file-upload-btn">
+                        <i class="fas fa-upload"></i> Escolher arquivo MP3
+                    </label>
+                    <input type="file" id="music-file" accept=".mp3" style="display: none;">
+                    <span id="file-name">Nenhum arquivo selecionado</span>
+                    <button id="upload-file-btn" disabled>Enviar</button>
+                </div>
+            </div>
+
+            <div class="playlist-container">
+                <h2>Playlist</h2>
+                <ul id="playlist">
+                    <!-- A playlist será gerada dinamicamente -->
+                    <li class="empty-playlist">Playlist vazia</li>
+                </ul>
+            </div>
+        </main>
+
+        <div class="chat-container">
+            <h2>Chat</h2>
+            <div class="chat-messages" id="chat-messages">
+                <!-- As mensagens serão adicionadas aqui -->
+                <div class="system-message">Bem-vindo ao chat da sala!</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+                <button id="send-message-btn">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script src="js/socket-client.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
