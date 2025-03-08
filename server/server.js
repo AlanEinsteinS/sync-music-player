@@ -15,7 +15,9 @@ const io = socketIo(server, {
     cors: {
         origin: '*',
         methods: ['GET', 'POST']
-    }
+    },
+    transports: ['polling'], // Forçar long-polling
+    allowUpgrades: false // Evitar upgrade para WebSocket
 });
 
 // Middleware
@@ -514,3 +516,4 @@ server.listen(PORT, () => {
 });
 
 module.exports = server;
+

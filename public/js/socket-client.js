@@ -247,5 +247,22 @@ class SocketClient {
     }
 }
 
+this.socket.on('connect_error', (err) => {
+    console.error('Erro de conexão:', err);
+    alert('Erro ao conectar ao servidor: ' + err.message);
+});
+
+const serverUrl = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000' 
+    : window.location.origin;
+
+// Adicione opções de fallback
+socketClient.connect(serverUrl, {
+    transports: ['polling'],
+    reconnection: true,
+    reconnectionAttempts: 10,
+    reconnectionDelay: 1000
+});
+
 // Exportar como uma instância singleton
 const socketClient = new SocketClient();
