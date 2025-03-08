@@ -9,17 +9,17 @@ class RoomController {
 
     // Criar uma nova sala
     async createRoom(roomId, socketId, username) {
-        const newRoom = new Room(roomId);
+        console.log(`Tentando criar sala: ${roomId} para socket: ${socketId}`);
         
-        // Adicionar o criador como primeiro usuário
+        const newRoom = new Room(roomId);
         newRoom.users.push({
             socketId: socketId,
             username: username,
             isHost: true
         });
         
-        // Armazenar sala
         this.rooms.set(roomId, newRoom);
+        console.log(`Sala criada com sucesso: ${roomId}, Total de salas: ${this.rooms.size}`);
         
         return newRoom;
     }

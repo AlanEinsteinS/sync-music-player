@@ -181,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupUIHandlers() {
         // Manipuladores para sala
         createRoomBtn.addEventListener('click', () => {
+            console.log("Botão Criar Sala clicado");
             socketClient.createRoom();
         });
         

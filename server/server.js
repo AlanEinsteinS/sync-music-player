@@ -13,11 +13,16 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
-        origin: '*',
-        methods: ['GET', 'POST']
-    },
-    transports: ['polling'], // Forçar long-polling
-    allowUpgrades: false // Evitar upgrade para WebSocket
+        origin: "*", // Em produção, especifique seu domínio
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+});
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 // Middleware

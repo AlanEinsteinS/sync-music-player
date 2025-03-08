@@ -27,9 +27,26 @@ class SocketClient {
 
     // Iniciar conexão com o servidor
     connect(serverUrl) {
-        this.socket = io(serverUrl);
+        console.log("Iniciando conexão com:", serverUrl);
+        this.socket = io(serverUrl, {
+            reconnectionAttempts: 5,
+            timeout: 10000 // 10 segundos para timeout
+        });
         
-        // Configurar eventos do socket
+        // Adicione estes eventos para depuração
+        this.socket.on('connect', () => {
+            console.log('Conectado ao servidor com ID:', this.socket.id);
+            this.callbacks.onConnect();
+        });
+        
+        this.socket.on('connect_error', (error) => {
+            console.error('Erro de conexão:', error);
+        });
+        
+        this.socket.on('connect_timeout', () => {
+            console.error('Timeout na conexão');
+        });
+
         this.socket.on('connect', () => {
             console.log('Conectado ao servidor');
             this.callbacks.onConnect();
@@ -129,6 +146,7 @@ class SocketClient {
 
     // Criar uma nova sala
     createRoom() {
+        console.log("Chamando socket.emit room:create");
         this.socket.emit('room:create', { username: this.username });
     }
 
@@ -255,6 +273,8 @@ this.socket.on('connect_error', (err) => {
 const serverUrl = window.location.hostname === 'localhost' 
     ? 'http://localhost:3000' 
     : window.location.origin;
+
+console.log("Tentando conectar a:", serverUrl); // Log para depuração
 
 // Adicione opções de fallback
 socketClient.connect(serverUrl, {
